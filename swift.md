@@ -1,9 +1,20 @@
 # Swift Style Guide
 
 ## Сontents
-* [File copyright](#file-copyright)
 
-### Naming
+* [Naming](#naming)
+* [Spacing](#spacing)
+* [Comments](#comments)
+* [Protocol Conformance](#protocol-conformance)
+* [Computed Properties](#computed-properties)
+* [Types](#types)
+* [Constants](#constants)
+* [Optionals](#optionals)
+* [Type Inference](#type-inference)
+* [Syntactic Sugar](#syntactic-sugar)
+* [Copyright Statement](#Copyright Statement)
+
+## Naming
 
 Use descriptive names with camel case for classes, methods, variables, etc. Class names should be capitalized, while method names and variables should start with a lower case letter.
 
@@ -89,58 +100,7 @@ When they are needed, use comments to explain **why** a particular piece of code
 Avoid block comments inline with code, as the code should be as self-documenting as possible. *Exception: This does not apply to those comments used to generate documentation.*
 
 
-## Classes and Structures
-
-### Example definition
-
-Here's an example of a well-styled class definition:
-
-```swift
-class Circle: Shape {
-  var x: Int, y: Int
-  var radius: Double
-  var diameter: Double {
-    get {
-      return radius * 2
-    }
-    set {
-      radius = newValue / 2
-    }
-  }
-
-  init(x: Int, y: Int, radius: Double) {
-    self.x = x
-    self.y = y
-    self.radius = radius
-  }
-
-  convenience init(x: Int, y: Int, diameter: Double) {
-    self.init(x: x, y: y, radius: diameter / 2)
-  }
-
-  func describe() -> String {
-    return "I am a circle at \(centerString()) with an area of \(computeArea())"
-  }
-
-  override func computeArea() -> Double {
-    return M_PI * radius * radius
-  }
-
-  private func centerString() -> String {
-    return "(\(x),\(y))"
-  }
-}
-```
-
-The example above demonstrates the following style guidelines:
-
- + Specify types for properties, variables, constants, argument declarations and other statements with a space after the colon but not before, e.g. `x: Int`, and `Circle: Shape`.
- + Define multiple variables and structures on a single line if they share a common purpose / context.
- + Indent getter and setter definitions and property observers.
- + Don't add modifiers such as `internal` when they're already the default. Similarly, don't repeat the access modifier when overriding a method.
-
-
-### Protocol Conformance
+## Protocol Conformance
 
 When adding protocol conformance to a class, prefer adding a separate class extension for the protocol methods. This keeps the related methods grouped together with the protocol and can simplify instructions to add a protocol to a class with its associated methods.
 
@@ -170,7 +130,7 @@ class MyViewcontroller: UIViewController, UITableViewDataSource, UIScrollViewDel
 }
 ```
 
-### Computed Properties
+## Computed Properties
 
 For conciseness, if a computed property is read-only, omit the get clause. The get clause is required only when a set clause is provided.
 
@@ -189,69 +149,6 @@ var diameter: Double {
   }
 }
 ```
-
-## Function Declarations
-
-Keep short function declarations on one line including the opening brace:
-
-```swift
-func reticulateSplines(spline: [Double]) -> Bool {
-  // reticulate code goes here
-}
-```
-
-For functions with long signatures, add line breaks at appropriate points and add an extra indent on subsequent lines:
-
-```swift
-func reticulateSplines(spline: [Double], adjustmentFactor: Double,
-    translateConstant: Int, comment: String) -> Bool {
-  // reticulate code goes here
-}
-```
-
-
-## Closure Expressions
-
-Use trailing closure syntax only if there's a single closure expression parameter at the end of the argument list. Give the closure parameters descriptive names.
-
-**Preferred:**
-```swift
-UIView.animateWithDuration(1.0) {
-  self.myView.alpha = 0
-}
-
-UIView.animateWithDuration(1.0,
-  animations: {
-    self.myView.alpha = 0
-  },
-  completion: { finished in
-    self.myView.removeFromSuperview()
-  }
-)
-```
-
-**Not Preferred:**
-```swift
-UIView.animateWithDuration(1.0, animations: {
-  self.myView.alpha = 0
-})
-
-UIView.animateWithDuration(1.0,
-  animations: {
-    self.myView.alpha = 0
-  }) { f in
-    self.myView.removeFromSuperview()
-}
-```
-
-For single-expression closures where the context is clear, use implicit returns:
-
-```swift
-attendeeList.sort { a, b in
-  a > b
-}
-```
-
 ## Types
 
 Always use Swift's native types when available. Swift offers bridging to Objective-C so you can still use the full set of methods as needed.
@@ -270,13 +167,13 @@ let widthString: NSString = width.stringValue        // NSString
 
 In Sprite Kit code, use `CGFloat` if it makes the code more succinct by avoiding too many conversions.
 
-### Constants
+## Constants
 
 Constants are defined using the `let` keyword, and variables with the `var` keyword. Always use `let` instead of `var` if the value of the variable will not change.
 
 **Tip:** A good technique is to define everything using `let` and only change it to `var` if the compiler complains!
 
-### Optionals
+## Optionals
 
 For optional binding, shadow the original name when appropriate rather than using names like `unwrappedView` or `actualLabel`.
 
@@ -303,24 +200,6 @@ if let unwrappedSubview = optionalSubview {
 }
 ```
 
-### Struct Initializers
-
-Use the native Swift struct initializers rather than the legacy CGGeometry constructors.
-
-**Preferred:**
-```swift
-let bounds = CGRect(x: 40, y: 20, width: 120, height: 80)
-let centerPoint = CGPoint(x: 96, y: 42)
-```
-
-**Not Preferred:**
-```swift
-let bounds = CGRectMake(40, 20, 120, 80)
-let centerPoint = CGPointMake(96, 42)
-```
-
-Prefer the struct-scope constants `CGRect.infiniteRect`, `CGRect.nullRect`, etc. over global constants `CGRectInfinite`, `CGRectNull`, etc. For existing variables, you can use the shorter `.zeroRect`.
-
 ### Type Inference
 
 Prefer compact code and let the compiler infer the type for a constant or variable, unless you need a specific type other than the default such as `CGFloat` or `Int16`.
@@ -342,7 +221,6 @@ var names: [String] = []
 
 **NOTE**: Following this guideline means picking descriptive names is even more important than before.
 
-
 ### Syntactic Sugar
 
 Prefer the shortcut versions of type declarations over the full generics syntax.
@@ -353,8 +231,6 @@ If variable has an unambiguous initial value do not use type declaration.
 var deviceModels: [String]
 var employees: [Int: String]
 var faxNumber: Int?
-var deviceMaxCount = 10
-var charged = true
 ```
 
 **Not Preferred:**
@@ -362,9 +238,6 @@ var charged = true
 var deviceModels: Array<String>
 var employees: Dictionary<Int, String>
 var faxNumber: Optional<Int>
-var deviceMaxCount: Int = 10
-var charged: Bool = true
 ```
 
-## Comments
 ## Copyright Statement
