@@ -8,8 +8,8 @@
 * [Protocol Conformance](#protocol-conformance)
 * [Computed Properties](#computed-properties)
 * [Types](#types)
-* [Constants](#constants)
-* [Optionals](#optionals)
+  * [Constants](#constants)
+  * [Optionals](#optionals)
 * [Type Inference](#type-inference)
 * [Syntactic Sugar](#syntactic-sugar)
 * [Copyright Statement](#Copyright Statement)
@@ -167,13 +167,13 @@ let widthString: NSString = width.stringValue        // NSString
 
 In Sprite Kit code, use `CGFloat` if it makes the code more succinct by avoiding too many conversions.
 
-## Constants
+### Constants
 
 Constants are defined using the `let` keyword, and variables with the `var` keyword. Always use `let` instead of `var` if the value of the variable will not change.
 
 **Tip:** A good technique is to define everything using `let` and only change it to `var` if the compiler complains!
 
-## Optionals
+### Optionals
 
 For optional binding, shadow the original name when appropriate rather than using names like `unwrappedView` or `actualLabel`.
 
@@ -241,3 +241,4 @@ var faxNumber: Optional<Int>
 ```
 
 ## Copyright Statement
+File header shouldn't contain any informatation about Creator and Date/Time it was created. Since git has all information about it.
