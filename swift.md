@@ -51,31 +51,6 @@ class Guideline {
 }
 ```
 
-### Enumerations
-
-Use UpperCamelCase for enumeration values:
-
-```swift
-enum Shape {
-  case Rectangle
-  case Square
-  case Triangle
-  case Circle
-}
-```
-
-### Prose
-
-When referring to functions in prose (tutorials, books, comments) include the required parameter names from the caller's perspective or `_` for unnamed parameters.
-
-> Call `convertPointAt(column:row:)` from your own `init` implementation.
->
-> If you call `dateFromString(_:)` make sure that you provide a string with the format "yyyy-MM-dd".
->
-> If you call `timedAction(delay:perform:)` from `viewDidLoad()` remember to provide an adjusted delay value and an action to perform.
->
-> You shouldn't call the data source method `tableView(_:cellForRowAtIndexPath:)` directly.
-
 ## Spacing
 
 * Indent using 2 spaces rather than tabs to conserve space and help prevent line wrapping. Be sure to set this preference in Xcode as shown below:
@@ -164,27 +139,6 @@ The example above demonstrates the following style guidelines:
  + Indent getter and setter definitions and property observers.
  + Don't add modifiers such as `internal` when they're already the default. Similarly, don't repeat the access modifier when overriding a method.
 
-
-### Use of Self
-
-For conciseness, avoid using `self` since Swift does not require it to access an object's properties or invoke its methods.
-
-Use `self` when required to differentiate between property names and arguments in initializers, and when referencing properties in closure expressions (as required by the compiler):
-
-```swift
-class BoardLocation {
-  let row: Int, column: Int
-
-  init(row: Int, column: Int) {
-    self.row = row
-    self.column = column
-    
-    let closure = {
-      println(self.row)
-    }
-  }
-}
-```
 
 ### Protocol Conformance
 
@@ -298,7 +252,6 @@ attendeeList.sort { a, b in
 }
 ```
 
-
 ## Types
 
 Always use Swift's native types when available. Swift offers bridging to Objective-C so you can still use the full set of methods as needed.
@@ -323,28 +276,7 @@ Constants are defined using the `let` keyword, and variables with the `var` keyw
 
 **Tip:** A good technique is to define everything using `let` and only change it to `var` if the compiler complains!
 
-
 ### Optionals
-
-Declare variables and function return types as optional with `?` where a nil value is acceptable.
-
-Use implicitly unwrapped types declared with `!` only for instance variables that you know will be initialized later before use, such as subviews that will be set up in `viewDidLoad`.
-
-When accessing an optional value, use optional chaining if the value is only accessed once or if there are many optionals in the chain:
-
-```swift
-self.textContainer?.textLabel?.setNeedsDisplay()
-```
-
-Use optional binding when it's more convenient to unwrap once and perform multiple operations:
-
-```swift
-if let textContainer = self.textContainer {
-  // do many things with textContainer
-}
-```
-
-When naming optional variables and properties, avoid naming them like `optionalString` or `maybeView` since their optional-ness is already in the type declaration.
 
 For optional binding, shadow the original name when appropriate rather than using names like `unwrappedView` or `actualLabel`.
 
@@ -434,34 +366,5 @@ var deviceMaxCount: Int = 10
 var charged: Bool = true
 ```
 
-
-## Control Flow
-
-Prefer the `for-in` style of `for` loop over the `for-condition-increment` style.
-
-**Preferred:**
-```swift
-for _ in 0..<3 {
-  print("Hello three times")
-}
-
-for (index, person) in attendeeList.enumerate() {
-  print("\(person) is at position #\(index)")
-}
-```
-
-**Not Preferred:**
-```swift
-for var i = 0; i < 3; i++ {
-  print("Hello three times")
-}
-
-for var i = 0; i < attendeeList.count; i++ {
-  let person = attendeeList[i]
-  print("\(person) is at position #\(i)")
-}
-```
-
 ## Comments
 ## Copyright Statement
-
