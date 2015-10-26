@@ -3,7 +3,7 @@
 ## Сontents
 * [File copyright](#file-copyright)
 
-## Naming
+### Naming
 
 Use descriptive names with camel case for classes, methods, variables, etc. Class names should be capitalized, while method names and variables should start with a lower case letter.
 
@@ -33,8 +33,8 @@ For functions and init methods, prefer named parameters for all arguments unless
 
 ```swift
 func dateFromString(dateString: String) -> NSDate
-func convertPointAt(#column: Int, #row: Int) -> CGPoint
-func timedAction(#delay: NSTimeInterval, perform action: SKAction) -> SKAction!
+func convertPointAt(column column: Int, row: Int) -> CGPoint
+func timedAction(delay delay: NSTimeInterval, perform action:SAction) -> Action!
 
 // would be called like this:
 dateFromString("2014-03-14")
@@ -76,21 +76,6 @@ When referring to functions in prose (tutorials, books, comments) include the re
 >
 > You shouldn't call the data source method `tableView(_:cellForRowAtIndexPath:)` directly.
 
-When in doubt, look at how Xcode lists the method in the jump bar – our style here matches that.
-
-![Methods in Xcode jump bar](screens/xcode-jump-bar.png)
-
-### Class Prefixes
-
-Swift types are automatically namespaced by the module that contains them and you should not add a class prefix. If two names from different modules collide you can disambiguate by prefixing the type name with the module name.
-
-```swift
-import SomeModule
-
-let myClass = MyModule.UsefulClass()
-```
-
-
 ## Spacing
 
 * Indent using 2 spaces rather than tabs to conserve space and help prevent line wrapping. Be sure to set this preference in Xcode as shown below:
@@ -130,14 +115,6 @@ Avoid block comments inline with code, as the code should be as self-documenting
 
 
 ## Classes and Structures
-
-### Which one to use?
-
-Remember, structs have [value semantics](https://developer.apple.com/library/mac/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_144). Use structs for things that do not have an identity. An array that contains [a, b, c] is really the same as another array that contains [a, b, c] and they are completely interchangeable. It doesn't matter whether you use the first array or the second, because they represent the exact same thing. That's why arrays are structs.
-
-Classes have [reference semantics](https://developer.apple.com/library/mac/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_145). Use classes for things that do have an identity or a specific life cycle. You would model a person as a class because two person objects are two different things. Just because two people have the same name and birthdate, doesn't mean they are the same person. But the person's birthdate would be a struct because a date of 3 March 1950 is the same as any other date object for 3 March 1950. The date itself doesn't have an identity.
-
-Sometimes, things should be structs but need to conform to `AnyObject` or are historically modeled as classes already (`NSDate`, `NSSet`). Try to follow these guidelines as closely as possible.
 
 ### Example definition
 
@@ -437,12 +414,15 @@ var names: [String] = []
 ### Syntactic Sugar
 
 Prefer the shortcut versions of type declarations over the full generics syntax.
+If variable has an unambiguous initial value do not use type declaration.
 
 **Preferred:**
 ```swift
 var deviceModels: [String]
 var employees: [Int: String]
 var faxNumber: Int?
+var deviceMaxCount = 10
+var charged = true
 ```
 
 **Not Preferred:**
@@ -450,6 +430,8 @@ var faxNumber: Int?
 var deviceModels: Array<String>
 var employees: Dictionary<Int, String>
 var faxNumber: Optional<Int>
+var deviceMaxCount: Int = 10
+var charged: Bool = true
 ```
 
 
@@ -460,23 +442,23 @@ Prefer the `for-in` style of `for` loop over the `for-condition-increment` style
 **Preferred:**
 ```swift
 for _ in 0..<3 {
-  println("Hello three times")
+  print("Hello three times")
 }
 
-for (index, person) in enumerate(attendeeList) {
-  println("\(person) is at position #\(index)")
+for (index, person) in attendeeList.enumerate() {
+  print("\(person) is at position #\(index)")
 }
 ```
 
 **Not Preferred:**
 ```swift
 for var i = 0; i < 3; i++ {
-  println("Hello three times")
+  print("Hello three times")
 }
 
 for var i = 0; i < attendeeList.count; i++ {
   let person = attendeeList[i]
-  println("\(person) is at position #\(i)")
+  print("\(person) is at position #\(i)")
 }
 ```
 
