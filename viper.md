@@ -1,4 +1,4 @@
-# Viper convention
+# VIPER convention
 
 ## Сontents
 
