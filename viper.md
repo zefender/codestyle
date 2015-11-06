@@ -7,7 +7,7 @@
   * [DataProvider](#dataprovider)
 * [Presenter](#presenter)
 * [Wireframe](#wireframe)
-  * [Destination](#destination)
+  * [Source](#source)
 
 ## View
 ## Interactor
@@ -18,4 +18,4 @@ If Interactor's job is only get an Entities it's allowed to direct usage DataPro
 ## Presenter
 
 ## Wireframe
-### Destination
+### Source
