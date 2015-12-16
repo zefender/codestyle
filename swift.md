@@ -7,6 +7,7 @@
 * [Comments](#comments)
 * [Protocol Conformance](#protocol-conformance)
 * [Computed Properties](#computed-properties)
+* [Initialization](#initialization)
 * [Types](#types)
   * [Constants](#constants)
   * [Optionals](#optionals)
@@ -149,6 +150,12 @@ var diameter: Double {
   }
 }
 ```
+
+## Initialization
+
+Use public weak property pointer if you need weak pointer to object (delegate are often) and use private constant + initializer injection for 
+strong pointing on depended object
+
 ## Types
 
 Always use Swift's native types when available. Swift offers bridging to Objective-C so you can still use the full set of methods as needed.
